@@ -10,9 +10,17 @@ class TodoList extends Component
 {
     use WithPagination;
 
+    public $filtered = false;
+
     public function render()
     {
-        return view('livewire.todo-list', ['todos' => Todo::paginate(10)]);
+        if ($this->filtered) {
+            $todos = Todo::where('completed', false)->paginate(10);
+        } else {
+            $todos = Todo::paginate(10);
+        }
+
+        return view('livewire.todo-list', ['todos' => $todos]);
     }
 
     public function complete($id)
@@ -43,5 +51,10 @@ class TodoList extends Component
     public function markAllIncomplete()
     {
         Todo::where('completed', true)->update(['completed' => false]);
+    }
+
+    public function filter()
+    {
+        $this->filtered = !$this->filtered;
     }
 }

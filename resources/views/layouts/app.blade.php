@@ -10,7 +10,7 @@
     @livewireStyles
 </head>
 <body>
-    <div class="flex text-center content-center justify-center">
+    <div class="flex text-center content-center h-screen justify-center">
         @yield('content')
     </div>
 
