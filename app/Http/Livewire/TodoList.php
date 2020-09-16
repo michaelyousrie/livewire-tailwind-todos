@@ -11,13 +11,16 @@ class TodoList extends Component
     use WithPagination;
 
     public $filtered = false;
+    protected $listeners = [
+        'updated'   => '$refresh'
+    ];
 
     public function render()
     {
         if ($this->filtered) {
-            $todos = Todo::where('completed', false)->paginate(10);
+            $todos = Todo::where('completed', false)->latest()->paginate(10);
         } else {
-            $todos = Todo::paginate(10);
+            $todos = Todo::latest()->paginate(10);
         }
 
         return view('livewire.todo-list', ['todos' => $todos]);
