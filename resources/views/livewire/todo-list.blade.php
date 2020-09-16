@@ -1,5 +1,9 @@
 <div>
     <h1 class="font-bold text-5xl">Todo List</h1>
+    <div class="my-5">
+        <input type="text" id="search" wire:model="search" class="w-5/12 border border-gray-500 p-1" placeholder="Search todos by title..">
+    </div>
+
     <table class="table rounded p-5 table-auto">
         <thead>
             <tr class="bg-gray-700 text-white">

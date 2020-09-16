@@ -11,6 +11,8 @@ class TodoList extends Component
     use WithPagination;
 
     public $filtered = false;
+    public $search = null;
+
     protected $listeners = [
         'updated'   => '$refresh'
     ];
@@ -20,7 +22,11 @@ class TodoList extends Component
         if ($this->filtered) {
             $todos = Todo::where('completed', false)->latest()->paginate(10);
         } else {
-            $todos = Todo::latest()->paginate(10);
+            if (!empty($this->search)) {
+                $todos = Todo::where('title', 'like', "%{$this->search}%")->latest()->paginate(10);
+            } else {
+                $todos = Todo::latest()->paginate(10);
+            }
         }
 
         return view('livewire.todo-list', ['todos' => $todos]);
